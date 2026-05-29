@@ -15,19 +15,21 @@ a= v.fit_transform(texts)
 r_train, r_test, l_train, l_test = train_test_split(a, labels, test_size=0.2)
 m= LogisticRegression()
 m.fit(r_train, l_train)
+while True:
+    text= input("enter the text: ")
+    if text.lower() == "exit":
+        break
 
-text= input("enter the text: ")
-
-def prediction(text):
-    v_input= v.transform([text])
-    prediction = m.predict(v_input)[0]
-    probability = m.predict_proba(v_input)[0][prediction]
-    print(probability)
-    return "positive" if prediction == 1 else "negative"
+    def prediction(text):
+        v_input= v.transform([text])
+        prediction = m.predict(v_input)[0]
+        probability = m.predict_proba(v_input)[0][prediction]
+        print(probability)
+        return "positive" if prediction == 1 else "negative"
 
 
-result = prediction(text)
-print(result)
+    result = prediction(text)
+    print(result)
 
 
 
