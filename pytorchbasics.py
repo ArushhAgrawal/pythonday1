@@ -76,8 +76,71 @@ print(p.dtype, int32)#prints the type of the tensor
 #to get data type use tensor.dtype
 #to get shape use tensor.shape
 #to get right device use tensor.device
-some_tensor= torch.rand(5,6)
-print(f"Data type: {some_tensor.dtype}")
-print(f"Shape: {some_tensor.shape}")
-print(f"Device: {some_tensor.device}")
+random_tensor= torch.rand(5,6)
+print(f"Data type: {random_tensor.dtype}")
+print(f"Shape: {random_tensor.shape}")
+print(f"Device: {random_tensor.device}")
 
+#manipulating tensors or tensor operations
+
+#additon
+tensor1= torch.tensor([1,2,3])               
+print(tensor1+10)#adds 10 to each element in the tensor
+
+#multiplication
+print(tensor1*10)#multiplies 10 to each element in the tensor
+
+#subtraction
+print(tensor1-10)#subtracts 10 from each element in the tensor
+
+#pytorch inbuild functions
+print(torch.add(tensor1,10))#adds 10 to each element in the tensor
+print(torch.mul(tensor1,10))#multiplies 10 to each element in
+print(torch.sub(tensor1,10))#subtracts 10 from each element in the tensor
+
+#matrix multiplication 
+tensor2= torch.tensor([4,5,6])
+print(f"element wise multiplication: {tensor1*tensor2}")#element wise multiplication
+print(f"matrix multiplication: {torch.matmul(tensor1, tensor2)}")#matrix multiplication
+
+#rules in matrix multiplication
+#1 the inner dimensions must match
+#example 1: (2,3)@ (2,3)not possible
+#example 2: (2,3)@ (3,4) possible  any matrix with same columns of 1st and same row of 2nd is possible
+#2 the result matrix has the shape of outer dimentions
+#example (2,3)@ (3,4)gives (2,4) shape matirx
+
+torch1= torch.rand(2,3)
+#print(torch.matmul(torch1,torch1). will show error)
+torch2=torch.rand(3,4)
+print(torch.matmul(torch1,torch2).shape)#this will work because the inner dimensions match
+
+#dealing with shape errors
+tensor_a= torch.tensor([[1,2],
+                         [3,4],
+                         [5,6]])
+tensor_b= torch.tensor([[7,8],
+                         [9,10],
+                         [11,12]])
+#m=torch.mm(tensor_a,tensor_b) #this will show error because the inner dimensions do not match
+#print(m)
+
+#to fix this issue we can manupulate the shape of the tesnor, aka we use transpose funtion
+print(tensor_b.T)#now we can do matrix multiplication
+m=torch.mm(tensor_a,tensor_b.T)
+print(m
+      , m.shape)#no more errors
+
+#finding min max mean and sum of tensors
+tensor_c= torch.arange(1,10).reshape(3,3)
+print(tensor_c)
+print(f"Min: {torch.min(tensor_c)}")#gives the minimum value in the tensor
+print(f"Max: {torch.max(tensor_c)}")#gives the maximum value
+print(f"type: {tensor_c.type()}")#gives the type of the tensor
+mean=tensor_c.type(torch.float32)#converting to float32
+print(f"Mean: {torch.mean(mean)}")#gives the mean of the tensor, we need to have to tensor in float or complex
+print(f"Sum: {torch.sum(tensor_c)}")#gives the sum of all the elements in the tensor
+
+#finding the index of min and max values
+print(f"Index of min: {torch.argmin(tensor_c)}")#"argmin" gives the index of the minimum value
+print(f"Index of max: {torch.argmax(tensor_c)}")#"argmax" gives the index of the maximum value
