@@ -144,3 +144,61 @@ print(f"Sum: {torch.sum(tensor_c)}")#gives the sum of all the elements in the te
 #finding the index of min and max values
 print(f"Index of min: {torch.argmin(tensor_c)}")#"argmin" gives the index of the minimum value
 print(f"Index of max: {torch.argmax(tensor_c)}")#"argmax" gives the index of the maximum value
+
+#squeezinng, reshaping, stacking, unsqueezing, view
+# reshaping - helps us change shape to a defined shpae
+# view- return view of the original tensor with the same data but different shape 
+# stacking- combine multiple tensores
+# squeeze- remove all "1" dimesnions
+# unsqueeze- add a "1" dimension
+# permute- return the view of an input with dimension swapped in a certain way 
+x= torch.arange(1,11)
+#print(x.shape)
+
+#reshapeing
+y=x.reshape(2,5)#reshape the tensor to 2 rows and 5 columns
+print(f"reshped: {y}")
+
+#view
+z=x.view(2,5)
+z[0,2]=100# this will change value of z but also x since z is the view of x
+print(f"view: {z}")
+print(f"origial: {x}")
+
+#stacking
+x_stack=torch.stack([y,y,y,y], dim=1)#stacking 4 copies of y along the second dimension
+print(x_stack)
+x_stack2= torch.vstack([y,y])#stacking 2 copies of y along the first dimension
+print(f"vstack.  {x_stack2}")
+x_stack3= torch.hstack([y,y])#stacking 2 copies of y along the third dimension
+print(f"hstack.  {x_stack3}")
+
+#squeeze
+tensor= torch.arange(1,31).reshape(1,5,3,2,1)# 1 tells batch, 5 tells the the number of grps, 2x3x1 is like 1 is for number of colums 2 for rows but 3 is the total number 2x1 matrix that can be kept in that for here its 3
+print(tensor.shape)
+print(tensor)
+tensor_squeezed= tensor.squeeze()#removes the "1" dimesnions"
+print(tensor_squeezed)
+print(tensor_squeezed.shape)#the shape becomes 5,3,2 from 1,5,3,2,1 since it removed 1 dimension
+
+#unsqueeze
+tensor_unsqueezed= tensor_squeezed.unsqueeze(dim=1)#adds a "1" dimension at the end
+print(tensor_unsqueezed)
+print(tensor_unsqueezed.shape)#gives output 9,1 since we used dim=1 we can use dim=2 also for certain shapes
+
+#permute in simple words its rearrange
+tensor_x= torch.arange(1,21).reshape(2,5,2)#2 batch of matri 5x2
+tensor_x[1,1,0]=69# 1 is batch index, 1 is row 0 is column
+print(tensor_x)
+tensor_y= tensor_x.permute(2,0,1)#outputs 2 batches of matrix 2x5
+print(tensor_y)
+#NOTE all of them will share same memory diffrent shape
+
+#indexing - selection of data from tensors
+x= torch.arange(1,21).reshape(2,2,5)
+print(f"old: {x}")
+x[1,1,1]=69 #changed the number at index 1,1 in dimension 0
+print(x[:,1,1])#putting : gives the number at index 1,1 in all the dimensions
+print(x[:,:,1])#gives all the numbers at column 1 in all the rows and dimension
+print(x[:,1,:])
+print(f"new: {x}")
